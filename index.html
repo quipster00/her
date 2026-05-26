@@ -22,20 +22,20 @@
     background-size: cover; opacity: 0.15; z-index: 0;
   }
 
-  /* LOCK SCREEN SECTION */
+  /* LOCK SCREEN SECTION - CLEAN & CENTERED */
   #lock-screen {
     position: relative; z-index: 10; text-align: center;
     width: 90%; max-width: 380px; display: flex; flex-direction: column; align-items: center;
   }
   .header-meta {
     font-size: 11px; font-weight: 700; letter-spacing: 2px;
-    color: rgba(255, 255, 255, 0.5); text-transform: uppercase; margin-bottom: 5px;
+    color: rgba(255, 255, 255, 0.6); text-transform: uppercase; margin-bottom: 5px;
   }
   .main-title {
-    font-size: 28px; font-weight: 700; color: #ffffff; margin: 0 0 10px 0;
+    font-size: 28px; font-weight: 700; color: #ffffff; margin: 0 0 10px 0; letter-spacing: 1px;
   }
   .hint-text {
-    font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 30px;
+    font-size: 14px; color: rgba(255, 255, 255, 0.8); margin-bottom: 30px;
   }
 
   /* Heart Dial Pad Container */
@@ -82,7 +82,6 @@
     background: #111111; color: #ffffff; font-size: 14px; font-weight: 700;
     letter-spacing: 2px; cursor: pointer; transition: background 0.2s;
   }
-  .enter-btn:hover { background: #222222; }
 
   /* ENVELOPE SECTION */
   #envelope-container {
@@ -106,15 +105,16 @@
     background: rgba(230, 210, 230, 0.6); border-radius: 4px; border: 1px dashed rgba(0,0,0,0.15);
   }
 
-  /* STATIONERY LETTER SECTION */
+  /* STATIONERY LETTER SCREEN - COMPLETELY HIDDEN AT START */
   #letter-screen {
-    display: none; position: relative; z-index: 10;
+    display: none; 
+    position: relative; z-index: 10;
     width: 92%; max-width: 430px; height: 85vh;
     background: #fdfaf2; border-radius: 14px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     border-left: 2px solid #ff9aa2; 
     background-image: linear-gradient(#e1dcd3 1px, transparent 1px);
-    background-size: 100% 32px; display: flex; flex-direction: column;
+    background-size: 100% 32px; flex-direction: column;
     box-sizing: border-box; padding: 0; overflow: hidden;
   }
   .letter-scrollable {
@@ -124,9 +124,9 @@
   .letter-scrollable::-webkit-scrollbar { width: 4px; }
   .letter-scrollable::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.05); border-radius: 10px; }
   
-  /* Photo forced to stretch beautifully across the top boundary */
+  /* Photo forced to stretch across the top boundary inside the letter screen */
   .img-container {
-    width: 100%; text-align: center; margin-bottom: 25px;
+    width: 100%; text-align: center; margin-bottom: 25px; display: block;
   }
   .portrait {
     width: 100%; display: block; height: auto; border-radius: 14px 14px 0 0;
@@ -260,7 +260,7 @@
                  
       if(code === '221024') {
         unlocked = true;
-        document.getElementById('audio-track').play().catch(e => console.log("Playback engine active"));
+        document.getElementById('audio-track').play().catch(e => console.log("Audio playing"));
         document.getElementById('status-hint').innerText = "Code accepted. Unlocking...";
         setTimeout(() => {
           document.getElementById('lock-screen').style.display = 'none';
@@ -290,9 +290,7 @@
     let charIdx = 0;
     let timer = null;
     const box = document.getElementById('scroll-box');
-    
-    // SPEED INCREASED: Set down to 12ms for near-instant, clean fluid pour effect!
-    const typeSpeedBody = 12; 
+    const typeSpeedBody = 12; /* Fluid rapid writing */
 
     function startTypingSequence() {
       typeTitleInline();
