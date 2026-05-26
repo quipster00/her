@@ -17,25 +17,31 @@
   }
   
   .bg-overlay {
-    position: absolute; width: 100%; height: 100%;
+    position: absolute; width: 100%; height: 100%; top: 0; left: 0;
     background: url('20260430_090547.jpg') no-repeat center center;
     background-size: cover; opacity: 0.15; z-index: 0;
   }
 
-  /* LOCK SCREEN SECTION - CLEAN & CENTERED */
+  /* ABSOLUTE LAYOUT CONTROLLERS */
+  .screen-layer {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; justify-content: center; align-items: center; z-index: 10;
+  }
+
+  /* LOCK SCREEN SECTION */
+  #lock-screen-wrapper { display: flex; }
   #lock-screen {
-    position: relative; z-index: 10; text-align: center;
-    width: 90%; max-width: 380px; display: flex; flex-direction: column; align-items: center;
+    background: transparent; display: flex; flex-direction: column; align-items: center; text-align: center;
   }
   .header-meta {
     font-size: 11px; font-weight: 700; letter-spacing: 2px;
-    color: rgba(255, 255, 255, 0.6); text-transform: uppercase; margin-bottom: 5px;
+    color: rgba(255, 255, 255, 0.7); text-transform: uppercase; margin-bottom: 5px;
   }
   .main-title {
     font-size: 28px; font-weight: 700; color: #ffffff; margin: 0 0 10px 0; letter-spacing: 1px;
   }
   .hint-text {
-    font-size: 14px; color: rgba(255, 255, 255, 0.8); margin-bottom: 30px;
+    font-size: 14px; color: rgba(255, 255, 255, 0.8); margin-bottom: 35px;
   }
 
   /* Heart Dial Pad Container */
@@ -60,33 +66,27 @@
     border-radius: 100px 100px 0 0; z-index: 1; transform: rotate(45deg);
   }
 
-  /* Dial Selectors Layout - 6 Slots */
-  .dial-pad {
-    display: flex; gap: 4px; margin-bottom: 15px;
-  }
+  /* Dial Pad Layout - 6 Slots Fixed */
+  .dial-pad { display: flex; gap: 4px; margin-bottom: 15px; }
   .dial-column {
     display: flex; flex-direction: column; align-items: center;
-    background: rgba(255, 255, 255, 0.9); padding: 4px 2px; border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95); padding: 4px 2px; border-radius: 12px;
   }
   .dial-btn {
     width: 24px; height: 20px; background: rgba(0, 0, 0, 0.05); border: none;
-    border-radius: 6px; font-size: 14px; font-weight: 700; color: #444;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; font-size: 14px; font-weight: 700; color: #444; cursor: pointer;
   }
-  .dial-btn:active { background: rgba(0, 0, 0, 0.12); }
-  .dial-value {
-    font-size: 20px; font-weight: 700; color: #222222; margin: 8px 0; width: 28px; text-align: center;
-  }
+  .dial-value { font-size: 20px; font-weight: 700; color: #222; margin: 8px 0; width: 28px; text-align: center; }
   .enter-btn {
     width: 130px; padding: 12px; border: none; border-radius: 25px;
     background: #111111; color: #ffffff; font-size: 14px; font-weight: 700;
-    letter-spacing: 2px; cursor: pointer; transition: background 0.2s;
+    letter-spacing: 2px; cursor: pointer;
   }
 
-  /* ENVELOPE SECTION */
+  /* ENVELOPE LAYER */
+  #envelope-wrapper { display: none; }
   #envelope-container {
-    display: none; position: relative; z-index: 10;
-    width: 90%; max-width: 400px; height: 260px;
+    position: relative; width: 90%; max-width: 400px; height: 260px;
     background: rgba(255, 255, 255, 0.85); border-radius: 16px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.5);
     cursor: pointer; transition: transform 0.4s ease, opacity 0.4s ease;
@@ -94,87 +94,53 @@
   .envelope-seal {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
     width: 45px; height: 45px; background: #9c27b0; border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   }
   .envelope-lines {
-    position: absolute; bottom: 30px; left: 30px; right: 30px;
-    height: 2px; background: rgba(0,0,0,0.1); box-shadow: 0 12px 0 rgba(0,0,0,0.1), 0 24px 0 rgba(0,0,0,0.1);
+    position: absolute; bottom: 30px; left: 30px; right: 30px; height: 2px;
+    background: rgba(0,0,0,0.1); box-shadow: 0 12px 0 rgba(0,0,0,0.1), 0 24px 0 rgba(0,0,0,0.1);
   }
   .envelope-stamp {
     position: absolute; top: 25px; right: 25px; width: 35px; height: 42px;
-    background: rgba(230, 210, 230, 0.6); border-radius: 4px; border: 1px dashed rgba(0,0,0,0.15);
+    background: rgba(230, 210, 230, 0.6); border: 1px dashed rgba(0,0,0,0.15); border-radius: 4px;
   }
 
-  /* STATIONERY LETTER SCREEN - COMPLETELY HIDDEN AT START */
+  /* STATIONERY LETTER SCREEN */
+  #letter-wrapper { display: none; }
   #letter-screen {
-    display: none; 
-    position: relative; z-index: 10;
-    width: 92%; max-width: 430px; height: 85vh;
-    background: #fdfaf2; border-radius: 14px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-    border-left: 2px solid #ff9aa2; 
-    background-image: linear-gradient(#e1dcd3 1px, transparent 1px);
-    background-size: 100% 32px; flex-direction: column;
-    box-sizing: border-box; padding: 0; overflow: hidden;
+    position: relative; width: 92%; max-width: 430px; height: 85vh;
+    background: #fdfaf2; border-radius: 14px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    border-left: 2px solid #ff9aa2; display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box;
   }
+  
+  /* Top Photo container scales edge-to-edge flush across the top */
+  .img-container { width: 100%; margin: 0; padding: 0; line-height: 0; }
+  .portrait { width: 100%; height: auto; display: block; border-radius: 14px 14px 0 0; }
+
+  /* Scrollable Paper Body */
   .letter-scrollable {
-    flex: 1; overflow-y: auto; padding: 0 25px 80px 30px;
-    box-sizing: border-box; scroll-behavior: smooth;
+    flex: 1; overflow-y: auto; padding: 25px 25px 90px 35px; box-sizing: border-box; scroll-behavior: smooth;
+    background-image: linear-gradient(#e1dcd3 1px, transparent 1px); background-size: 100% 32px; line-height: 32px;
   }
   .letter-scrollable::-webkit-scrollbar { width: 4px; }
   .letter-scrollable::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.05); border-radius: 10px; }
   
-  /* Photo forced to stretch across the top boundary inside the letter screen */
-  .img-container {
-    width: 100%; text-align: center; margin-bottom: 25px; display: block;
-  }
-  .portrait {
-    width: 100%; display: block; height: auto; border-radius: 14px 14px 0 0;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-
-  .top-metadata {
-    display: flex; justify-content: space-between; align-items: center;
-    height: 32px; margin-bottom: 32px; font-family: 'Inter', sans-serif;
-  }
-  .dear-title {
-    font-size: 24px; font-weight: 500; color: #111111; font-style: italic;
-  }
-  .date-badge {
-    font-size: 11px; font-weight: 600; color: #8c857b; letter-spacing: 1px;
-  }
-  .arabic-callout {
-    font-size: 28px; text-align: left; margin-bottom: 16px;
-    color: #222222; font-family: 'Times New Roman', serif; height: 32px; line-height: 32px;
-  }
-  .body-text {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 20px; line-height: 32px; color: #2c2a27;
-    white-space: pre-line; text-align: left; margin-bottom: 40px;
-  }
-  .sign-off-block {
-    text-align: right; font-family: 'Inter', sans-serif;
-    font-size: 12px; color: #6d665a; font-weight: 600; line-height: 32px; margin-right: -10px;
-  }
-  .sign-off-name {
-    font-size: 20px; font-weight: 700; color: #111111; letter-spacing: 1px; line-height: 32px;
-  }
+  .top-metadata { display: flex; justify-content: space-between; align-items: center; height: 32px; margin-bottom: 32px; }
+  .dear-title { font-size: 24px; font-weight: 500; color: #111111; font-style: italic; }
+  .date-badge { font-size: 11px; font-weight: 600; color: #8c857b; letter-spacing: 1px; }
+  .arabic-callout { font-size: 28px; text-align: left; margin-bottom: 16px; color: #222222; font-family: 'Times New Roman', serif; height: 32px; }
+  .body-text { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 21px; color: #2c2a27; white-space: pre-line; text-align: left; margin-bottom: 40px; }
+  .sign-off-block { text-align: right; font-size: 12px; color: #6d665a; font-weight: 600; }
+  .sign-off-name { font-size: 20px; font-weight: 700; color: #111111; letter-spacing: 1px; }
   
   .footer-bar {
     position: absolute; bottom: 0; left: 0; right: 0; height: 75px;
-    background: linear-gradient(to top, #fdfaf2 70%, transparent);
-    display: flex; justify-content: center; align-items: center; border-radius: 0 0 14px 14px;
+    background: linear-gradient(to top, #fdfaf2 70%, transparent); display: flex; justify-content: center; align-items: center;
   }
   .nav-btn {
     padding: 10px 32px; border: 1px solid rgba(0,0,0,0.15); border-radius: 20px;
-    background: #ffffff; font-size: 12px; font-weight: 700; letter-spacing: 1px;
-    color: #555; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    background: #ffffff; font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #555; cursor: pointer;
   }
-
-  .text-cursor {
-    display: inline-block; width: 2px; height: 18px; background: #2c2a27;
-    margin-left: 2px; animation: blink 0.8s infinite; vertical-align: middle;
-  }
+  .text-cursor { width: 2px; height: 18px; background: #2c2a27; display: inline-block; margin-left: 2px; animation: blink 0.8s infinite; vertical-align: middle; }
   @keyframes blink { 0%, 100% { opacity:0; } 50% { opacity:1; } }
 </style>
 </head>
@@ -186,56 +152,62 @@
     <source src="music.mp3" type="audio/mpeg">
   </audio>
 
-  <div id="lock-screen">
-    <div class="lock-shackle"></div>
-    <div class="header-meta">Pin Locked Love Letter</div>
-    <div class="main-title">For Your Eyes Only</div>
-    <div class="hint-text" id="status-hint">Sound started. Enter the 6-digit pin.</div>
-    
-    <div class="heart-container">
-      <div class="heart-content-wrapper">
-        <div class="dial-pad">
-          <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d1',1)">+</button><div class="dial-value" id="d1">0</div><button class="dial-btn" onclick="changeDigit('d1',-1)">-</button></div>
-          <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d2',1)">+</button><div class="dial-value" id="d2">0</div><button class="dial-btn" onclick="changeDigit('d2',-1)">-</button></div>
-          <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d3',1)">+</button><div class="dial-value" id="d3">0</div><button class="dial-btn" onclick="changeDigit('d3',-1)">-</button></div>
-          <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d4',1)">+</button><div class="dial-value" id="d4">0</div><button class="dial-btn" onclick="changeDigit('d4',-1)">-</button></div>
-          <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d5',1)">+</button><div class="dial-value" id="d5">0</div><button class="dial-btn" onclick="changeDigit('d5',-1)">-</button></div>
-          <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d6',1)">+</button><div class="dial-value" id="d6">0</div><button class="dial-btn" onclick="changeDigit('d6',-1)">-</button></div>
+  <div class="screen-layer" id="lock-screen-wrapper">
+    <div id="lock-screen">
+      <div class="lock-shackle"></div>
+      <div class="header-meta">Pin Locked Love Letter</div>
+      <div class="main-title">For Your Eyes Only</div>
+      <div class="hint-text" id="status-hint">Sound started. Enter the 6-digit pin.</div>
+      
+      <div class="heart-container">
+        <div class="heart-content-wrapper">
+          <div class="dial-pad">
+            <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d1',1)">+</button><div class="dial-value" id="d1">0</div><button class="dial-btn" onclick="changeDigit('d1',-1)">-</button></div>
+            <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d2',1)">+</button><div class="dial-value" id="d2">0</div><button class="dial-btn" onclick="changeDigit('d2',-1)">-</button></div>
+            <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d3',1)">+</button><div class="dial-value" id="d3">0</div><button class="dial-btn" onclick="changeDigit('d3',-1)">-</button></div>
+            <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d4',1)">+</button><div class="dial-value" id="d4">0</div><button class="dial-btn" onclick="changeDigit('d4',-1)">-</button></div>
+            <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d5',1)">+</button><div class="dial-value" id="d5">0</div><button class="dial-btn" onclick="changeDigit('d5',-1)">-</button></div>
+            <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d6',1)">+</button><div class="dial-value" id="d6">0</div><button class="dial-btn" onclick="changeDigit('d6',-1)">-</button></div>
+          </div>
+          <button class="enter-btn" onclick="checkPin()">ENTER</button>
         </div>
-        <button class="enter-btn" onclick="checkPin()">ENTER</button>
       </div>
     </div>
   </div>
 
-  <div id="envelope-container" onclick="openEnvelope()">
-    <div class="envelope-stamp"></div>
-    <div class="envelope-lines"></div>
-    <div class="envelope-seal"></div>
+  <div class="screen-layer" id="envelope-wrapper">
+    <div id="envelope-container" onclick="openEnvelope()">
+      <div class="envelope-stamp"></div>
+      <div class="envelope-lines"></div>
+      <div class="envelope-seal"></div>
+    </div>
   </div>
 
-  <div id="letter-screen">
-    <div class="img-container">
-      <img class="portrait" src="20260430_090547.jpg" alt="Portrait">
-    </div>
+  <div class="screen-layer" id="letter-wrapper">
+    <div id="letter-screen">
+      <div class="img-container">
+        <img class="portrait" src="20260430_090547.jpg" alt="Portrait">
+      </div>
 
-    <div class="letter-scrollable" id="scroll-box">
-      <div class="top-metadata">
-        <div class="dear-title">Dear <span id="arabic-inline"></span></div>
-        <div class="date-badge">1 MAY 2026</div>
+      <div class="letter-scrollable" id="scroll-box">
+        <div class="top-metadata">
+          <div class="dear-title">Dear <span id="arabic-inline"></span></div>
+          <div class="date-badge">1 MAY 2026</div>
+        </div>
+        
+        <div class="arabic-callout" id="main-callout"></div>
+        
+        <div class="body-text"><span id="live-text"></span><span class="text-cursor" id="letter-cursor"></span></div>
+        
+        <div class="sign-off-block" id="sign-block" style="display:none;">
+          Yours always,<br>
+          <span class="sign-off-name">KALIL</span>
+        </div>
       </div>
       
-      <div class="arabic-callout" id="main-callout"></div>
-      
-      <div class="body-text"><span id="live-text"></span><span class="text-cursor" id="letter-cursor"></span></div>
-      
-      <div class="sign-off-block" id="sign-block" style="display:none;">
-        Yours always,<br>
-        <span class="sign-off-name">KALIL</span>
+      <div class="footer-bar">
+        <button class="nav-btn" id="action-btn" onclick="skipTyping()">SKIP</button>
       </div>
-    </div>
-    
-    <div class="footer-bar">
-      <button class="nav-btn" id="action-btn" onclick="skipTyping()">SKIP</button>
     </div>
   </div>
 
@@ -260,12 +232,12 @@
                  
       if(code === '221024') {
         unlocked = true;
-        document.getElementById('audio-track').play().catch(e => console.log("Audio playing"));
+        document.getElementById('audio-track').play().catch(e => console.log("Audio online"));
         document.getElementById('status-hint').innerText = "Code accepted. Unlocking...";
         setTimeout(() => {
-          document.getElementById('lock-screen').style.display = 'none';
-          document.getElementById('envelope-container').style.display = 'block';
-        }, 800);
+          document.getElementById('lock-screen-wrapper').style.display = 'none';
+          document.getElementById('envelope-wrapper').style.display = 'flex';
+        }, 600);
       } else {
         document.getElementById('status-hint').innerText = "Incorrect code. Try again.";
         setTimeout(() => { document.getElementById('status-hint').innerText = "Sound started. Enter the 6-digit pin."; }, 2000);
@@ -277,8 +249,8 @@
       env.style.transform = "scale(0.9) translateY(-100px)";
       env.style.opacity = "0";
       setTimeout(() => {
-        env.style.display = 'none';
-        document.getElementById('letter-screen').style.display = 'flex';
+        document.getElementById('envelope-wrapper').style.display = 'none';
+        document.getElementById('letter-wrapper').style.display = 'flex';
         startTypingSequence();
       }, 400);
     }
@@ -290,7 +262,7 @@
     let charIdx = 0;
     let timer = null;
     const box = document.getElementById('scroll-box');
-    const typeSpeedBody = 12; /* Fluid rapid writing */
+    const typeSpeedBody = 8; 
 
     function startTypingSequence() {
       typeTitleInline();
@@ -300,10 +272,10 @@
       if(charIdx < titleText.length) {
         document.getElementById('arabic-inline').innerHTML += titleText.charAt(charIdx);
         charIdx++;
-        timer = setTimeout(typeTitleInline, 50);
+        timer = setTimeout(typeTitleInline, 40);
       } else {
         charIdx = 0;
-        setTimeout(typeMainCallout, 200);
+        setTimeout(typeMainCallout, 150);
       }
     }
 
@@ -311,10 +283,10 @@
       if(charIdx < subTitleText.length) {
         document.getElementById('main-callout').innerHTML += subTitleText.charAt(charIdx);
         charIdx++;
-        timer = setTimeout(typeMainCallout, 60);
+        timer = setTimeout(typeMainCallout, 40);
       } else {
         charIdx = 0;
-        setTimeout(typeMainBody, 300);
+        setTimeout(typeMainBody, 200);
       }
     }
 
