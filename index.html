@@ -2,69 +2,95 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FOR YOUR EYES ONLY</title>
 <style>
-  body, html { margin: 0; padding: 0; height: 100%; background: #121212; font-family: sans-serif; display: flex; justify-content: center; align-items: center; }
-
-  /* FRONT PAGE STYLE */
-  #lock-screen { text-align: center; color: white; }
-  .title { font-size: 24px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; }
-  .subtitle { color: #888; font-size: 14px; margin-bottom: 20px; }
-  input { display: block; width: 250px; padding: 15px; margin: 0 auto 20px; background: #1e1e1e; border: 1px solid #333; color: white; text-align: center; font-size: 18px; border-radius: 4px; }
-  button { width: 280px; padding: 15px; background: white; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; }
-
-  /* LETTER PAGE STYLE */
-  #letter-wrapper { display: none; width: 90%; max-width: 500px; height: 90vh; background: #fdfaf2; padding: 20px; overflow-y: auto; color: #333; }
-  .photo { width: 100%; height: auto; margin-bottom: 20px; }
-  .arabic-title { text-align: right; font-size: 30px; font-weight: bold; margin-bottom: 10px; }
-  .text-content { font-size: 18px; line-height: 1.6; word-wrap: break-word; }
+  body, html {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #111111;
+    display: flex; justify-content: center; align-items: center;
+    color: #ffffff;
+  }
+  #lock-screen { text-align: center; width: 85%; max-width: 360px; }
+  .title { font-size: 26px; font-weight: 700; letter-spacing: 3px; margin-bottom: 10px; }
+  .subtitle { font-size: 14px; color: #888888; letter-spacing: 2px; margin-bottom: 30px; }
+  #pin-input { width: 100%; padding: 16px; font-size: 18px; border: 1px solid #333333; border-radius: 12px; background-color: #1e1e1e; color: #ffffff; margin-bottom: 18px; text-align: center; box-sizing: border-box; outline: none; }
+  #unlock-btn { width: 100%; padding: 16px; font-size: 16px; font-weight: bold; color: #111111; background-color: #ffffff; border: none; border-radius: 12px; cursor: pointer; letter-spacing: 2px; }
+  
+  #secret-content { display: none; width: 100%; height: 100%; overflow-y: auto; background-color: #fcf8f2; color: #2c2520; }
+  .wrapper { padding: 35px 25px; max-width: 500px; margin: 30px auto; background-color: #ffffff; }
+  .img-container { width: 100%; margin-bottom: 35px; text-align: center; }
+  .portrait { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+  .arabic-header { font-family: "Times New Roman", Georgia, serif; font-size: 38px; text-align: right; margin-top: 20px; margin-bottom: 25px; color: #111111; direction: rtl; }
+  .letter-text { font-size: 20px; line-height: 1.85; text-align: left; white-space: pre-line; font-family: 'Cormorant Garamond', Georgia, serif; color: #2c2a27; }
 </style>
 </head>
 <body>
 
-<div id="lock-screen">
-  <div class="title">FOR YOUR EYES ONLY</div>
-  <div class="subtitle">PIN REQUIRED FOR ACCESS</div>
-  <input type="password" id="pin" maxlength="6" placeholder="......">
-  <button onclick="checkPin()">ACCESS</button>
-</div>
+  <audio id="bg-music" src="music.mp3" loop></audio>
 
-<div id="letter-wrapper">
-  <img src="image_b376d6.jpg" class="photo" alt="Portrait">
-  <div class="arabic-title">بيتي</div>
-  <div class="text-content" id="content"></div>
-</div>
+  <div id="lock-screen">
+    <div class="title">FOR YOUR EYES ONLY</div>
+    <div class="subtitle">PIN REQUIRED FOR ACCESS</div>
+    <input type="password" pattern="[0-9]*" inputmode="numeric" id="pin-input" placeholder="••••••">
+    <button id="unlock-btn" onclick="verify()">ACCESS</button>
+  </div>
 
-<script>
-  const fullText = `I have lost count of the times my pen has bled trying to express what I feel for you, only for it to fail me miserably. Maybe it’s because I keep chasing perfection in my words. I was looking for the right language, when I should have simply been looking at you. How foolish of me not to realize that as long as the subject is you, everything will sound right, everything will feel right… everything will be just right.
+  <div id="secret-content">
+    <div class="wrapper">
+      <div class="img-container">
+        <img class="portrait" src="20260430_090547.jpg" alt="Portrait">
+      </div>
+      <div class="arabic-header">بيتي</div>
+      <div class="letter-text" id="typing-area"></div>
+    </div>
+  </div>
 
-You have always longed to see the world through the eyes of a child. Through that gaze, the world softens, becomes gentler, kinder, simpler, unafraid of wonder. In that innocence, curiosity has no boundaries, imagination no ceiling, and beauty hides in plain sight. You’re sweet, kind, caring, honest, unable to feign your emotions. If someone wounds you, it’s written all over your face. In a world built with masks and performances, you remain real.
+  <script>
+    const fullText = `I have lost count of the times my pen has bled trying to express what I feel for you, only for it to fail me miserably. Maybe it's because I keep chasing perfection in my words. I was looking for the right language, when I should have simply been looking at you. How foolish of me not to realize that as long as the subject is you, everything will sound right, everything will feel right, and everything will be just right.
 
-You want to trust again. You want to rest in another’s care, to stop being strong by default. You long for someone who cares enough to be as involved and invested in your life as you are. Someone to take the weight off your shoulders, even in the smallest ways. You want someone to choose for you, not to control you, but to show that they care enough to notice the food on your plate, the clothes on your body, the music in your ears, the tone of your voice. You want them to see the way your mood shifts with the smallest inconvenience, the way you sit when you’re comfortable versus when you’re not, the moments you almost speak but chooses not to, the difference between what you say and what you mean, the habits you repeat without realizing, the fury you keep hidden… You want someone who helps you decide, not because you’re helpless, but because they see you entirely.
+You've always longed to see the world through the eyes of a child. Through that gaze, the world softens, becomes gentler, kinder, simpler, and unafraid of wonder. In that innocence, curiosity has no boundaries, imagination no ceiling, and beauty hides in plain sight. You're sweet, kind, caring, honest, unable to feign emotions. If someone wounds you, it's written all over your face. In a world built with masks and performances, you remain real.
+
+You want to trust again. You want to rest in another's care, to stop being strong by default. You long for someone who cares enough to be as involved and invested in your life as you are. Someone to take the weight off your shoulders, even in the smallest ways. You want someone to choose for you, not to control you, but to show that they care enough to notice the food on your plate, the clothes on your body, the music in your ears, the tone of your voice. You want them to see the way your mood shifts with the smallest inconvenience, the way you sit when you're comfortable versus when you're not, the moment you almost speak but chooses not to, the difference between what you say and what you mean, the habits you repeat without realizing, the fury you keep hidden... you want someone who helps you decide, not because you're helpless, but because they see you entirely.
 
 But how can you trust people when all they do is give you reasons not to?
 
-So, you built a world of your own, a world with no doors, no windows, and walls so high, one could reach the heavens if they had courage to climb them. You created a space where there is no room for you to need people. You become everything to yourself. In your solitude, people started to whisper behind your back. They say you’ve changed, grown cold and distant, others called you strong, and independent. But for you, it was never about strength, it was about protection.
+So, you built a world of your own, a world with no doors, no windows, and walls so high, one could reach the heavens if they had courage to climb them. You created a space where there is no room for you to need people. You became everything to yourself. In your solitude, people started to whisper behind your back. They say you've changed, grown cold and distant, others called you strong, and independent. But for you it was never about strength, it was about protection.
 
-You’ve lived within those walls for so long that now, when someone tries to get close, you can feel the walls tremble. It’s her, your inner child, trying to break free, to feel again, to love and to experience the world at her own pace. This unsettles you. So, you end up pushing them away before anything has a chance to matter too much. It’s a defense mechanism; the only way you know how to keep your inner child’s innocence safe.
+You've lived within those walls for so long that now, when someone tries to get close, you can feel the walls tremble. It's her, your inner child, trying to break free, to feel again, to love, and to experience the world at her own pace. This unsettles you. So, you end up pushing them away before anything has a chance to matter too much. It's a defense mechanism, the only way you know how to keep your inner child's innocence safe.
 
-But I’m not going anywhere, even if it takes a million years to dismantle what you’ve built, I will spend my whole existence removing more bricks than I did the day before. Not as a promise meant to impress you, but simply as a fact that does not change with time or distance. I will remain consistent in the way I show up. Not loud. Not desperate. Just present.
+But I'm not going anywhere, even if it takes a million years to dismantle what you've built, I'll spend my whole existence removing more bricks than I did the day before. Not as a promise meant to impress you, but simply as a fact that does not change with time or distance. I'll remain consistent in the way I show up. Not loud. Not desperate. Just present.
 
-When I go quiet, do not mistake it for a lack of love, nor for a lack of caring. Rather, it’s my way of fixing my life, tidying up old habits, and getting my mind in the right place. Because you deserve a version of me that is whole, disciplined, and at peace with itself.
+When I go quiet, do not mistake it for a lack of love, nor for a lack of caring. Rather, it's my way of fixing my life, tidying up old habits, and getting my mind in its right place. Because you deserve a version of me that is whole, disciplined, and at peace with itself.
 
 I LOVE YOU.
-
 -KHALIL`;
 
-  function checkPin() {
-    if(document.getElementById('pin').value === "221024") {
-      document.getElementById('lock-screen').style.display = 'none';
-      document.getElementById('letter-wrapper').style.display = 'block';
-      document.getElementById('content').innerText = fullText;
-    } else {
-      alert("Incorrect PIN");
+    function verify() {
+      var entered = document.getElementById('pin-input').value;
+      if (entered === '221024') {
+        document.getElementById('lock-screen').style.display = 'none';
+        document.body.style.backgroundColor = '#fdfcf7';
+        document.getElementById('secret-content').style.display = 'block';
+        
+        // Play music and start typing
+        document.getElementById('bg-music').play();
+        typeText();
+      } else {
+        alert('Incorrect PIN. Please try again.');
+      }
     }
-  }
-</script>
+
+    let i = 0;
+    function typeText() {
+      if (i < fullText.length) {
+        document.getElementById('typing-area').textContent += fullText.charAt(i);
+        i++;
+        setTimeout(typeText, 15);
+      }
+    }
+  </script>
 </body>
 </html>
