@@ -3,48 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <title>FOR YOUR EYES ONLY</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-  body, html { margin: 0; padding: 0; height: 100%; background: #1a1a1a; display: flex; justify-content: center; align-items: center; font-family: 'Cormorant Garamond', serif; }
+  body, html { margin: 0; padding: 0; height: 100%; background: #121212; font-family: sans-serif; display: flex; justify-content: center; align-items: center; }
 
-  /* 3D LOCK SCREEN */
-  #lock-screen { 
-    width: 600px; height: 400px; background: #d4c4a8; border: 20px solid #8b5a2b;
-    box-shadow: 10px 10px 30px rgba(0,0,0,0.8), inset 0 0 50px rgba(0,0,0,0.3);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-  }
-  .title-3d { font-size: 40px; color: #4a3728; text-shadow: 2px 2px 0px #fff, 4px 4px 0px #8b5a2b; margin-bottom: 30px; }
-  .heart-3d { width: 100px; height: 100px; background: #8b0000; transform: rotate(-45deg); box-shadow: -10px 10px 20px rgba(0,0,0,0.5); margin-bottom: 20px; }
-  .dial-pad { display: flex; gap: 10px; }
-  .dial-col { background: #b8860b; padding: 10px; border-radius: 4px; border: 2px solid #5d2e0a; color: white; font-weight: bold; }
-  .unlock-btn { margin-top: 20px; padding: 10px 40px; background: #8b4513; color: white; border: none; font-size: 20px; cursor: pointer; }
+  /* FRONT PAGE STYLE */
+  #lock-screen { text-align: center; color: white; }
+  .title { font-size: 24px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 20px; }
+  input { display: block; width: 250px; padding: 15px; margin: 0 auto 20px; background: #1e1e1e; border: 1px solid #333; color: white; text-align: center; font-size: 18px; border-radius: 4px; }
+  button { width: 280px; padding: 15px; background: white; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; }
 
-  /* LETTER SCREEN */
-  #letter-wrapper { display: none; width: 500px; height: 80vh; background: #fdfaf2; padding: 30px; overflow-y: auto; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
-  .photo { width: 100%; height: auto; border: 5px solid #d4c4a8; }
-  .letter-content { font-size: 20px; line-height: 1.8; color: #2c2a27; white-space: pre-wrap; margin-top: 20px; }
-  .arabic-title { text-align: right; font-size: 32px; font-weight: bold; margin-bottom: 15px; }
+  /* LETTER PAGE STYLE */
+  #letter-wrapper { display: none; width: 90%; max-width: 500px; height: 90vh; background: #fdfaf2; padding: 20px; overflow-y: auto; color: #333; }
+  .photo { width: 100%; height: auto; margin-bottom: 20px; }
+  .arabic-title { text-align: right; font-size: 30px; font-weight: bold; margin-bottom: 10px; }
+  .text-content { font-size: 18px; line-height: 1.6; word-wrap: break-word; }
 </style>
 </head>
 <body>
 
-<audio id="bg-music" src="music.mp3" loop></audio>
-
 <div id="lock-screen">
-  <div class="title-3d">FOR YOUR EYES ONLY</div>
-  <div class="heart-3d"></div>
-  <div class="dial-pad">
-    <script>for(let i=1; i<=6; i++) document.write(`<div class="dial-col"><button onclick="chg('d${i}',1)">+</button><div id="d${i}">0</div><button onclick="chg('d${i}',-1)">-</button></div>`);</script>
-  </div>
-  <button class="unlock-btn" onclick="verify()">UNLOCK</button>
+  <div class="title">FOR YOUR EYES ONLY</div>
+  <div class="subtitle">PIN REQUIRED FOR ACCESS</div>
+  <input type="password" id="pin" maxlength="6" placeholder="......">
+  <button onclick="checkPin()">ACCESS</button>
 </div>
 
 <div id="letter-wrapper">
-  <img src="20260430_090547.jpg" class="photo" alt="Portrait">
-  <div class="letter-content">
-    <div class="arabic-title">بيتي</div>
-    <div id="typing-area"></div>
-  </div>
+  <img src="image_b376d6.jpg" class="photo" alt="Portrait">
+  <div class="arabic-title">بيتي</div>
+  <div class="text-content" id="content"></div>
 </div>
 
 <script>
@@ -68,24 +56,13 @@ I LOVE YOU.
 
 -KHALIL`;
 
-  function chg(id, d) { let el = document.getElementById(id); let v = parseInt(el.innerText)+d; el.innerText = (v>9)?0:(v<0)?9:v; }
-  
-  function verify() {
-    let code = ""; for(let i=1; i<=6; i++) code += document.getElementById(`d${i}`).innerText;
-    if(code === "221024") {
+  function checkPin() {
+    if(document.getElementById('pin').value === "221024") {
       document.getElementById('lock-screen').style.display = 'none';
       document.getElementById('letter-wrapper').style.display = 'block';
-      document.getElementById('bg-music').play();
-      type();
-    } else { alert("Incorrect"); }
-  }
-
-  let i = 0;
-  function type() {
-    if(i < fullText.length) {
-      document.getElementById('typing-area').innerText += fullText.charAt(i);
-      i++;
-      setTimeout(type, 10);
+      document.getElementById('content').innerText = fullText;
+    } else {
+      alert("Incorrect PIN");
     }
   }
 </script>
