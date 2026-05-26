@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOR YOUR EYES ONLY</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body, html {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); /* Sunset background gradient */
+    display: flex; justify-content: center; align-items: center;
+    color: #ffffff;
+    overflow: hidden;
+  }
+  #lock-screen {
+    text-align: center;
+    width: 85%;
+    max-width: 360px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 30px 20px;
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: #f3e8ff;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+  }
+  #pin-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+  }
+  .pin-digit-box {
+    width: 45px;
+    height: 55px;
+    font-size: 24px;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333333;
+    text-align: center;
+    outline: none;
+  }
+  #unlock-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(45deg, #ff758c 0%, #ff7eb3 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4);
+  }
+  #secret-content {
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 20px 10px;
+  }
+  /* Lined stationery notebook style */
+  .wrapper {
+    padding: 40px 30px;
+    max-width: 450px;
+    margin: 40px auto;
+    background-color: #fdfaf2; 
+    background-image: linear-gradient(#e1dcd3 1px, transparent 1px);
+    background-size: 100% 32px; 
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border-left: 2px solid #ff9aa2; /* Clean vertical pink line */
+  }
+  .date-marker {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #8c857b;
+    text-align: right;
+    margin-bottom: 15px;
+    line-height: 32px;
+  }
+  .img-container {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .portrait {
+    max-width: 45%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  }
+  .arabic-header {
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 36px;
+    text-align: right;
+    margin-bottom: 15px;
+    color: #111111;
+    direction: rtl;
+    display: none;
+    line-height: 32px;
+  }
+  .letter-text {
+    font-size: 20px;
+    line-height: 32px; /* Perfect tracking across the paper lines */
+    text-align: left;
+    white-space: pre-line;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    color: #2c2a27;
+  }
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 18px;
+    background-color: #2c2a27;
+    margin-left: 2px;
+    animation: blink 0.8s infinite;
+    vertical-align: middle;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+  <audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="lock-screen">
+    <div class="title">FOR YOUR EYES ONLY</div>
+    <div class="subtitle">PIN REQUIRED FOR ACCESS</div>
+    
+    <div id="pin-container">
+      <input type="password" maxlength="1" pattern="[0-9]*" inputmode="numeric" class="pin-digit-box" onkeyup="moveFocus(this, 'p2')", id="p1">
+      <input type="password" maxlength="1" pattern="[0-9]*" inputmode="numeric" class="pin-digit-box" onkeyup="moveFocus(this, 'p3')", id="p2">
+      <input type="password" maxlength="1" pattern="[0-9]*" inputmode="numeric" class="pin-digit-box" onkeyup="moveFocus(this, 'p4')", id="p3">
+      <input type="password" maxlength="1" pattern="[0-9]*" inputmode="numeric" class="pin-digit-box" id="p4">
+    </div>
+    
+    <button id="unlock-btn" onclick="verify()">ENTER</button>
+  </div>
+
+  <div id="secret-content">
+    <div class="wrapper">
+      <div class="date-marker">1 May 2026</div>
+      
+      <div class="img-container">
+        <img class="portrait" src="20260430_090547.jpg" alt="Portrait">
+      </div>
+      
+      <div class="arabic-header" id="arabic-title">بيتي</div>
+      <div class="letter-text"><span id="typed-letter"></span><span class="cursor" id="typing-cursor"></span></div>
+    </div>
+  </div>
+
+  <script>
+    // Automatically hops the cursor to the next digit box
+    function moveFocus(current, nextId) {
+      if (current.value.length >= 1) {
+        document.getElementById(nextId).focus();
+      }
+    }
+
+    const fullText = `I have lost count of the times my pen has bled trying to express what I feel for you, only for it to fail me miserably. Maybe it's because I keep chasing perfection in my words. I was looking for the right language, when I should have simply been looking at you. How foolish of me not to realize that as long as the subject is you, everything will sound right, everything will feel right, and everything will be just right. \n\nYou've always longed to see the world through the eyes of a child. Through that gaze, the world softens, becomes gentler, kinder, simpler, and unafraid of wonder. In that innocence, curiosity has no boundaries, imagination no ceiling, and beauty hides in plain sight. You're sweet, kind, caring, honest, unable to feign emotions. If someone wounds you, it's written all over your face. In a world built with masks and performances, you remain real.\n\nYou want to trust again. You want to rest in another's care, to stop being strong by default. You long for someone who cares enough to be as involved and invested in your life as you are. Someone to take the weight off your shoulders, even in the smallest ways. You want someone to choose for you, not to control you, but to show that they care enough to notice the food on your plate, the clothes on your body, the music in your ears, the tone of your voice. You want them to see the way your mood shifts with the smallest inconvenience, the way you sit when you're comfortable versus when you're not, the moment you almost speak but chooses not to, the difference between what you say and what you mean, the habits you repeat without realizing, the fury you keep hidden... you want someone who helps you decide, not because you're helpless, but because they see you entirely. \n\nBut how can you trust people when all they do is give you reasons not to?\n\nSo, you built a world of your own, a world with no doors, no windows, and walls so high, one could reach the heavens if they had courage to climb them. You created a space where there is no room for you to need people. You became everything to yourself. In your solitude, people started to whisper behind your back. They say you've changed, grown cold and distant, others called you strong, and independent. But for you it was never about strength, it was about protection. \n\nYou've lived within those walls for so long that now, when someone tries to get close, you can feel the walls tremble. It's her, your inner child, trying to break free, to feel again, to love, and to experience the world at her own pace. This unsettles you. So, you end up pushing them away before anything has a chance to matter too much. It's a defense mechanism, the only way you know how to keep your inner child's innocence safe.\n\nBut I'm not going anywhere, even if it takes a million years to dismantle what you've built, I'll spend my whole existence removing more bricks than I did the day before. Not as a promise meant to impress you, but simply as a fact that does not change with time or distance. I'll remain consistent in the way I show up. Not loud. Not desperate. Just present. \n\nWhen I go quiet, do not mistake it for a lack of love, nor for a lack of caring. Rather, it's my way of fixing my life, tidying up old habits, and getting my mind in its right place. Because you deserve a version of me that is whole, disciplined, and at peace with itself.\n\nI LOVE YOU. \n                                                                        -KHALIL`;
+
+    let index = 0;
+    const typingSpeed = 35; 
+
+    function typeWriter() {
+      if (index < fullText.length) {
+        document.getElementById("typed-letter").innerHTML += fullText.charAt(index);
+        index++;
+        
+        var container = document.getElementById("secret-content");
+        container.scrollTop = container.scrollHeight;
+        
+        setTimeout(typeWriter, typingSpeed);
+      } else {
+        document.getElementById("typing-cursor").style.display = "none";
+      }
+    }
+
+    function verify() {
+      var pin = document.getElementById('p1').value + 
+                document.getElementById('p2').value + 
+                document.getElementById('p3').value + 
+                document.getElementById('p4').value;
+
+      // Unlocks when she enters her unlock combination matching the video timeline
+      if (pin === '2210') { 
+        const music = document.getElementById('bg-music');
+        music.play().catch(e => console.log("Audio pipeline loaded."));
+
+        document.getElementById('lock-screen').style.display = 'none';
+        document.getElementById('secret-content').style.display = 'block';
+        
+        setTimeout(() => {
+          document.getElementById("arabic-title").style.display = "block";
+          typeWriter();
+        }, 600);
+      } else {
+        alert('Incorrect PIN. Please try again.');
+        document.getElementById('p1').value = '';
+        document.getElementById('p2').value = '';
+        document.getElementById('p3').value = '';
+        document.getElementById('p4').value = '';
+        document.getElementById('p1').focus();
+      }
+    }
+  </script>
+</body>
+</html>
