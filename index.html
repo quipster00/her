@@ -60,7 +60,7 @@
     border-radius: 100px 100px 0 0; z-index: 1; transform: rotate(45deg);
   }
 
-  /* Dial Selectors Layout - Updated for 6 slots */
+  /* Dial Selectors Layout - 6 Slots */
   .dial-pad {
     display: flex; gap: 4px; margin-bottom: 15px;
   }
@@ -90,7 +90,7 @@
     width: 90%; max-width: 400px; height: 260px;
     background: rgba(255, 255, 255, 0.85); border-radius: 16px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.5);
-    cursor: pointer; transition: transform 0.5s ease;
+    cursor: pointer; transition: transform 0.4s ease, opacity 0.4s ease;
   }
   .envelope-seal {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -115,7 +115,7 @@
     border-left: 2px solid #ff9aa2; 
     background-image: linear-gradient(#e1dcd3 1px, transparent 1px);
     background-size: 100% 32px; display: flex; flex-direction: column;
-    box-sizing: border-box; padding: 0; overflow: hidden; /* Photo fits full width, no body padding */
+    box-sizing: border-box; padding: 0; overflow: hidden;
   }
   .letter-scrollable {
     flex: 1; overflow-y: auto; padding: 0 25px 80px 30px;
@@ -124,13 +124,13 @@
   .letter-scrollable::-webkit-scrollbar { width: 4px; }
   .letter-scrollable::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.05); border-radius: 10px; }
   
-  /* Photo scales up to fill the full width of the paper card */
+  /* Photo forced to stretch beautifully across the top boundary */
   .img-container {
-    width: 100%; text-align: center; margin-bottom: 25px; margin-top: -2px; /* Pulls photo up flush */
+    width: 100%; text-align: center; margin-bottom: 25px;
   }
   .portrait {
-    width: 100%; max-width: 100%; height: auto; border-radius: 14px 14px 0 0; /* Matches top of card */
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    width: 100%; display: block; height: auto; border-radius: 14px 14px 0 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
 
   .top-metadata {
@@ -160,7 +160,6 @@
     font-size: 20px; font-weight: 700; color: #111111; letter-spacing: 1px; line-height: 32px;
   }
   
-  /* Fixed Footer Button Layer */
   .footer-bar {
     position: absolute; bottom: 0; left: 0; right: 0; height: 75px;
     background: linear-gradient(to top, #fdfaf2 70%, transparent);
@@ -196,36 +195,12 @@
     <div class="heart-container">
       <div class="heart-content-wrapper">
         <div class="dial-pad">
-          <div class="dial-column">
-            <button class="dial-btn" onclick="changeDigit('d1', 1)">+</button>
-            <div class="dial-value" id="d1">0</div>
-            <button class="dial-btn" onclick="changeDigit('d1', -1)">-</button>
-          </div>
-          <div class="dial-column">
-            <button class="dial-btn" onclick="changeDigit('d2', 1)">+</button>
-            <div class="dial-value" id="d2">0</div>
-            <button class="dial-btn" onclick="changeDigit('d2', -1)">-</button>
-          </div>
-          <div class="dial-column">
-            <button class="dial-btn" onclick="changeDigit('d3', 1)">+</button>
-            <div class="dial-value" id="d3">0</div>
-            <button class="dial-btn" onclick="changeDigit('d3', -1)">-</button>
-          </div>
-          <div class="dial-column">
-            <button class="dial-btn" onclick="changeDigit('d4', 1)">+</button>
-            <div class="dial-value" id="d4">0</div>
-            <button class="dial-btn" onclick="changeDigit('d4', -1)">-</button>
-          </div>
-          <div class="dial-column">
-            <button class="dial-btn" onclick="changeDigit('d5', 1)">+</button>
-            <div class="dial-value" id="d5">0</div>
-            <button class="dial-btn" onclick="changeDigit('d5', -1)">-</button>
-          </div>
-          <div class="dial-column">
-            <button class="dial-btn" onclick="changeDigit('d6', 1)">+</button>
-            <div class="dial-value" id="d6">0</div>
-            <button class="dial-btn" onclick="changeDigit('d6', -1)">-</button>
-          </div>
+          <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d1',1)">+</button><div class="dial-value" id="d1">0</div><button class="dial-btn" onclick="changeDigit('d1',-1)">-</button></div>
+          <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d2',1)">+</button><div class="dial-value" id="d2">0</div><button class="dial-btn" onclick="changeDigit('d2',-1)">-</button></div>
+          <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d3',1)">+</button><div class="dial-value" id="d3">0</div><button class="dial-btn" onclick="changeDigit('d3',-1)">-</button></div>
+          <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d4',1)">+</button><div class="dial-value" id="d4">0</div><button class="dial-btn" onclick="changeDigit('d4',-1)">-</button></div>
+          <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d5',1)">+</button><div class="dial-value" id="d5">0</div><button class="dial-btn" onclick="changeDigit('d5',-1)">-</button></div>
+          <div class="dial-column"><button class="dial-btn" onclick="changeDigit('d6',1)">+</button><div class="dial-value" id="d6">0</div><button class="dial-btn" onclick="changeDigit('d6',-1)">-</button></div>
         </div>
         <button class="enter-btn" onclick="checkPin()">ENTER</button>
       </div>
@@ -265,13 +240,8 @@
   </div>
 
   <script>
-    // Audio trigger
-    document.body.addEventListener('touchstart', function() {
-      const track = document.getElementById('audio-track');
-      if(track.paused && !unlocked) { track.play().then(() => track.pause()).catch(e => {}); }
-    }, {once: true});
-
     let unlocked = false;
+    
     function changeDigit(id, change) {
       let el = document.getElementById(id);
       let val = parseInt(el.innerText) + change;
@@ -288,15 +258,14 @@
                  document.getElementById('d5').innerText +
                  document.getElementById('d6').innerText;
                  
-      // UPDATED PIN: 221024
       if(code === '221024') {
         unlocked = true;
-        document.getElementById('audio-track').play().catch(e => console.log("Audio pipeline loaded."));
+        document.getElementById('audio-track').play().catch(e => console.log("Playback engine active"));
         document.getElementById('status-hint').innerText = "Code accepted. Unlocking...";
         setTimeout(() => {
           document.getElementById('lock-screen').style.display = 'none';
           document.getElementById('envelope-container').style.display = 'block';
-        }, 1000);
+        }, 800);
       } else {
         document.getElementById('status-hint').innerText = "Incorrect code. Try again.";
         setTimeout(() => { document.getElementById('status-hint').innerText = "Sound started. Enter the 6-digit pin."; }, 2000);
@@ -318,13 +287,12 @@
     const subTitleText = "بيتي";
     const letterContent = `I once dreamed of living in another era, far from everything society made us need. But now, even paradise would feel empty without you in it. Bread and meat may feed my body, but it's your existence that feeds my soul. You are my heart in human form, ya ruhi.\n\nI LOVE YOU.`;
 
-    let step = 0;
     let charIdx = 0;
     let timer = null;
     const box = document.getElementById('scroll-box');
     
-    // TYPING SPEED: Lower number = FASTER. Set to 20ms for very fast, fluid typing.
-    const typeSpeedBody = 20; 
+    // SPEED INCREASED: Set down to 12ms for near-instant, clean fluid pour effect!
+    const typeSpeedBody = 12; 
 
     function startTypingSequence() {
       typeTitleInline();
@@ -334,11 +302,10 @@
       if(charIdx < titleText.length) {
         document.getElementById('arabic-inline').innerHTML += titleText.charAt(charIdx);
         charIdx++;
-        timer = setTimeout(typeTitleInline, 90);
+        timer = setTimeout(typeTitleInline, 50);
       } else {
         charIdx = 0;
-        step = 1;
-        setTimeout(typeMainCallout, 350);
+        setTimeout(typeMainCallout, 200);
       }
     }
 
@@ -346,11 +313,10 @@
       if(charIdx < subTitleText.length) {
         document.getElementById('main-callout').innerHTML += subTitleText.charAt(charIdx);
         charIdx++;
-        timer = setTimeout(typeMainCallout, 110);
+        timer = setTimeout(typeMainCallout, 60);
       } else {
         charIdx = 0;
-        step = 2;
-        setTimeout(typeMainBody, 400);
+        setTimeout(typeMainBody, 300);
       }
     }
 
@@ -359,7 +325,6 @@
         document.getElementById('live-text').innerHTML += letterContent.charAt(charIdx);
         charIdx++;
         box.scrollTop = box.scrollHeight;
-        // Body types at the new fast speed setting
         timer = setTimeout(typeMainBody, typeSpeedBody);
       } else {
         finishLetterLayout();
@@ -373,6 +338,11 @@
       document.getElementById('action-btn').setAttribute('onclick', 'location.reload()');
       box.scrollTop = box.scrollHeight;
     }
+
+    document.body.addEventListener('touchstart', function() {
+      const track = document.getElementById('audio-track');
+      if(track.paused && !unlocked) { track.play().then(() => track.pause()).catch(e => {}); }
+    }, {once: true});
 
     function skipTyping() {
       clearTimeout(timer);
