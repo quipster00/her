@@ -3,78 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FOR YOUR EYES ONLY</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<title>For Your Eyes Only</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Indie+Flower&display=swap" rel="stylesheet">
 <style>
-  body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Inter', sans-serif; background: linear-gradient(to bottom, #fbc2eb 0%, #a6c1ee 100%); display: flex; justify-content: center; align-items: center; overflow: hidden; }
-  .screen-layer { position: absolute; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; z-index: 10; }
+  /* VINTAGE PAPER AESTHETIC */
+  body, html { 
+    margin: 0; padding: 0; width: 100%; height: 100%; 
+    background: #c2b280; /* Coffee stain base */
+    display: flex; justify-content: center; align-items: center;
+    font-family: 'Indie Flower', cursive;
+  }
 
-  /* LOCK SCREEN */
-  #lock-screen { display: flex; flex-direction: column; align-items: center; }
-  .heart-container { position: relative; width: 280px; height: 280px; background: #ff7eb3; border-radius: 50% 50% 0 0; transform: rotate(-45deg); display: flex; justify-content: center; align-items: center; }
-  .heart-content { transform: rotate(45deg); display: flex; flex-direction: column; align-items: center; margin-top: 30px; margin-left: 30px; }
-  .dial-pad { display: flex; gap: 5px; margin-bottom: 20px; }
-  .dial-column { display: flex; flex-direction: column; align-items: center; background: #fff; padding: 5px; border-radius: 8px; }
-  .dial-value { font-size: 20px; font-weight: bold; margin: 5px 0; }
-  .btn { cursor: pointer; border: none; background: #000; color: #fff; padding: 10px 20px; border-radius: 20px; }
+  .paper-card {
+    width: 90%; max-width: 400px; height: 85vh;
+    background: #fdfaf2; /* Coffee-dipped paper color */
+    background-image: radial-gradient(circle at 50% 50%, rgba(200,180,150,0.2) 0%, transparent 70%);
+    border-radius: 2px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    position: relative; overflow: hidden;
+    border: 1px solid #dcd3c2;
+  }
 
-  /* LETTER SCREEN */
-  #letter-wrapper { display: none; background: rgba(0,0,0,0.3); }
-  #letter-card { width: 90%; max-width: 400px; height: 80vh; background: #fdfaf2; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-  
-  /* ELEGANT PHOTO FRAME: Fixed size, centered, rounded corners */
-  .img-wrapper { height: 35%; width: 100%; display: flex; justify-content: center; align-items: center; overflow: hidden; padding: 15px; box-sizing: border-box; }
-  .portrait { width: auto; height: 100%; object-fit: cover; border-radius: 8px; }
+  /* LOCK SCREEN (THE ENVELOPE FRONT) */
+  #lock-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
+  .lock-title { font-size: 24px; margin-bottom: 20px; color: #4a443a; }
+  .dial-pad { display: flex; gap: 4px; margin-bottom: 20px; }
+  .dial-col { display: flex; flex-direction: column; align-items: center; background: #eee5d3; padding: 5px; border-radius: 4px; }
+  .dial-val { font-size: 22px; font-weight: bold; margin: 4px 0; min-width: 20px; }
+  .btn { cursor: pointer; border: 1px solid #4a443a; background: transparent; padding: 5px 15px; font-family: 'Indie Flower'; }
 
-  .letter-body { flex: 1; overflow-y: auto; padding: 20px; font-family: 'Cormorant Garamond', serif; font-size: 19px; line-height: 1.6; color: #2c2a27; }
-  .footer { padding: 15px; text-align: center; background: #fdfaf2; }
+  /* LETTER SCREEN (THE UNFOLDED INTERIOR) */
+  #letter-wrapper { display: none; height: 100%; display: flex; flex-direction: column; }
+  .photo-frame { height: 25%; width: 100%; padding: 10px; box-sizing: border-box; }
+  .photo-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; border: 1px solid #c2b280; }
+  .letter-text { flex: 1; overflow-y: auto; padding: 0 30px 30px 30px; font-size: 22px; line-height: 1.5; color: #2c2a27; }
 </style>
 </head>
 <body>
 
-  <div class="screen-layer" id="lock-screen-wrapper">
+  <div class="paper-card">
     <div id="lock-screen">
-      <h2 style="color:white; margin-bottom: 20px;">For Your Eyes Only</h2>
-      <div class="heart-container">
-        <div class="heart-content">
-          <div class="dial-pad" id="pad">
-            <script>for(let i=1; i<=6; i++) document.write(`<div class="dial-column"><button class="btn" onclick="change('d${i}',1)">+</button><div class="dial-value" id="d${i}">0</div><button class="btn" onclick="change('d${i}',-1)">-</button></div>`);</script>
-          </div>
-          <button class="btn" onclick="checkPin()">ENTER</button>
-        </div>
+      <div class="lock-title">For Your Eyes Only</div>
+      <div class="dial-pad">
+        <script>for(let i=1; i<=6; i++) document.write(`<div class="dial-col"><button class="btn" onclick="chg('d${i}',1)">+</button><div class="dial-val" id="d${i}">0</div><button class="btn" onclick="chg('d${i}',-1)">-</button></div>`);</script>
       </div>
+      <button class="btn" onclick="verify()">UNFOLD</button>
     </div>
-  </div>
 
-  <div class="screen-layer" id="letter-wrapper">
-    <div id="letter-card">
-      <div class="img-wrapper">
-        <img class="portrait" src="20260430_090547.jpg" alt="Portrait">
-      </div>
-      <div class="letter-body">
-        <h3 style="margin-top:0;">بيتي</h3>
-        <p id="content"></p>
-        <p style="text-align: right; font-weight: bold;">-KHALIL</p>
+    <div id="letter-wrapper">
+      <div class="photo-frame"><img src="20260430_090547.jpg" alt="Portrait"></div>
+      <div class="letter-text">
+        <div style="font-size: 28px; font-weight: bold; margin-bottom: 15px; font-family: 'Dancing Script';">بيتي</div>
+        <span id="typing-area"></span>
       </div>
     </div>
   </div>
 
   <script>
-    function change(id, delta) {
-      let el = document.getElementById(id);
-      let v = parseInt(el.innerText) + delta;
-      el.innerText = (v > 9) ? 0 : (v < 0) ? 9 : v;
+    function chg(id, d) { let el = document.getElementById(id); let v = parseInt(el.innerText)+d; el.innerText = (v>9)?0:(v<0)?9:v; }
+    
+    function verify() {
+      let code = ""; for(let i=1; i<=6; i++) code += document.getElementById(`d${i}`).innerText;
+      if(code === "221024") {
+        document.getElementById('lock-screen').style.display = 'none';
+        document.getElementById('letter-wrapper').style.display = 'flex';
+        setTimeout(type, 3000); // 3 second pause
+      } else { alert("Not the right key."); }
     }
 
-    function checkPin() {
-      let code = "";
-      for(let i=1; i<=6; i++) code += document.getElementById(`d${i}`).innerText;
-      if(code === "221024") {
-        document.getElementById('lock-screen-wrapper').style.display = 'none';
-        document.getElementById('letter-wrapper').style.display = 'flex';
-        document.getElementById('content').innerText = `I have lost count of the times my pen has bled trying to express what I feel for you, only for it to fail me miserably. Maybe it’s because I keep chasing perfection in my words. I was looking for the right language, when I should have simply been looking at you. How foolish of me not to realize that as long as the subject is you, everything will sound right, everything will feel right… everything will be just right.\n\nYou have always longed to see the world through the eyes of a child. Through that gaze, the world softens, becomes gentler, kinder, simpler, unafraid of wonder. In that innocence, curiosity has no boundaries, imagination no ceiling, and beauty hides in plain sight. You’re sweet, kind, caring, honest, unable to feign your emotions. If someone wounds you, it’s written all over your face. In a world built with masks and performances, you remain real.\n\nYou want to trust again. You want to rest in another’s care, to stop being strong by default. You long for someone who cares enough to be as involved and invested in your life as you are. Someone to take the weight off your shoulders, even in the smallest ways. You want someone to choose for you, not to control you, but to show that they care enough to notice the food on your plate, the clothes on your body, the music in your ears, the tone of your voice. You want them to see the way your mood shifts with the smallest inconvenience, the way you sit when you’re comfortable versus when you’re not, the moments you almost speak but chooses not to, the difference between what you say and what you mean, the habits you repeat without realizing, the fury you keep hidden… You want someone who helps you decide, not because you’re helpless, but because they see you entirely.\n\nBut how can you trust people when all they do is give you reasons not to?\n\nSo, you built a world of your own, a world with no doors, no windows, and walls so high, one could reach the heavens if they had courage to climb them. You created a space where there is no room for you to need people. You become everything to yourself. In your solitude, people started to whisper behind your back. They say you’ve changed, grown cold and distant, others called you strong, and independent. But for you, it was never about strength, it was about protection.\n\nYou’ve lived within those walls for so long that now, when someone tries to get close, you can feel the walls tremble. It’s her, your inner child, trying to break free, to feel again, to love and to experience the world at her own pace. This unsettles you. So, you end up pushing them away before anything has a chance to matter too much. It’s a defense mechanism; the only way you know how to keep your inner child’s innocence safe.\n\nBut I’m not going anywhere, even if it takes a million years to dismantle what you’ve built, I will spend my whole existence removing more bricks than I did the day before. Not as a promise meant to impress you, but simply as a fact that does not change with time or distance. I will remain consistent in the way I show up. Not loud. Not desperate. Just present.\n\nWhen I go quiet, do not mistake it for a lack of love, nor for a lack of caring. Rather, it’s my way of fixing my life, tidying up old habits, and getting my mind in the right place. Because you deserve a version of me that is whole, disciplined, and at peace with itself.\n\nI LOVE YOU.`;
-      } else {
-        alert("Wrong code");
+    const text = `I have lost count of the times my pen has bled trying to express what I feel for you, only for it to fail me miserably. Maybe it’s because I keep chasing perfection in my words. I was looking for the right language, when I should have simply been looking at you. How foolish of me not to realize that as long as the subject is you, everything will sound right, everything will feel right… everything will be just right.\n\nYou have always longed to see the world through the eyes of a child. Through that gaze, the world softens, becomes gentler, kinder, simpler, unafraid of wonder. In that innocence, curiosity has no boundaries, imagination no ceiling, and beauty hides in plain sight. You’re sweet, kind, caring, honest, unable to feign your emotions. If someone wounds you, it’s written all over your face. In a world built with masks and performances, you remain real.\n\nYou want to trust again. You want to rest in another’s care, to stop being strong by default. You long for someone who cares enough to be as involved and invested in your life as you are. Someone to take the weight off your shoulders, even in the smallest ways. You want someone to choose for you, not to control you, but to show that they care enough to notice the food on your plate, the clothes on your body, the music in your ears, the tone of your voice. You want them to see the way your mood shifts with the smallest inconvenience, the way you sit when you’re comfortable versus when you’re not, the moments you almost speak but chooses not to, the difference between what you say and what you mean, the habits you repeat without realizing, the fury you keep hidden… You want someone who helps you decide, not because you’re helpless, but because they see you entirely.\n\nBut how can you trust people when all they do is give you reasons not to?\n\nSo, you built a world of your own, a world with no doors, no windows, and walls so high, one could reach the heavens if they had courage to climb them. You created a space where there is no room for you to need people. You become everything to yourself. In your solitude, people started to whisper behind your back. They say you’ve changed, grown cold and distant, others called you strong, and independent. But for you, it was never about strength, it was about protection.\n\nYou’ve lived within those walls for so long that now, when someone tries to get close, you can feel the walls tremble. It’s her, your inner child, trying to break free, to feel again, to love and to experience the world at her own pace. This unsettles you. So, you end up pushing them away before anything has a chance to matter too much. It’s a defense mechanism; the only way you know how to keep your inner child’s innocence safe.\n\nBut I’m not going anywhere, even if it takes a million years to dismantle what you’ve built, I will spend my whole existence removing more bricks than I did the day before. Not as a promise meant to impress you, but simply as a fact that does not change with time or distance. I will remain consistent in the way I show up. Not loud. Not desperate. Just present.\n\nWhen I go quiet, do not mistake it for a lack of love, nor for a lack of caring. Rather, it’s my way of fixing my life, tidying up old habits, and getting my mind in the right place. Because you deserve a version of me that is whole, disciplined, and at peace with itself.\n\nI LOVE YOU.\n\n-KHALIL`;
+    
+    let i = 0;
+    function type() {
+      if(i < text.length) {
+        document.getElementById('typing-area').innerText += text.charAt(i);
+        i++;
+        setTimeout(type, 15);
       }
     }
   </script>
