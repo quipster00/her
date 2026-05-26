@@ -20,16 +20,21 @@
 
   /* LETTER SCREEN */
   #letter-wrapper { display: none; background: rgba(0,0,0,0.3); }
-  #letter-card { width: 90%; max-width: 400px; height: 80vh; background: #fdfaf2; border-radius: 12px; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+  #letter-card { 
+    width: 90%; max-width: 400px; height: 80vh; background: #fdfaf2; border-radius: 12px; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    /* LINED PAPER EFFECT */
+    background-image: linear-gradient(#e0dcd0 1px, transparent 1px);
+    background-size: 100% 30px;
+  }
   
   .img-wrapper { width: 100%; }
   .portrait { width: 100%; height: auto; display: block; }
-  .letter-body { padding: 20px; font-family: 'Cormorant Garamond', serif; font-size: 19px; line-height: 1.6; color: #2c2a27; }
+  .letter-body { padding: 20px; font-family: 'Cormorant Garamond', serif; font-size: 19px; line-height: 30px; color: #2c2a27; }
 </style>
 </head>
 <body>
 
-  <audio id="bg-music" src="YOUR_MUSIC_FILE.mp3" loop></audio>
+  <audio id="bg-music" src="music.mp3" loop></audio>
 
   <div class="screen-layer" id="lock-screen-wrapper">
     <div id="lock-screen">
@@ -52,12 +57,15 @@
       </div>
       <div class="letter-body">
         <h3 style="margin-top:0;">بيتي</h3>
-        <p>I have lost count of the times my pen has bled trying to express what I feel for you, only for it to fail me miserably. Maybe it’s because I keep chasing perfection in my words. I was looking for the right language, when I should have simply been looking at you. How foolish of me not to realize that as long as the subject is you, everything will sound right, everything will feel right… everything will be just right.<br><br>You have always longed to see the world through the eyes of a child. Through that gaze, the world softens, becomes gentler, kinder, simpler, unafraid of wonder. In that innocence, curiosity has no boundaries, imagination no ceiling, and beauty hides in plain sight. You’re sweet, kind, caring, honest, unable to feign your emotions. If someone wounds you, it’s written all over your face. In a world built with masks and performances, you remain real.<br><br>You want to trust again. You want to rest in another’s care, to stop being strong by default. You long for someone who cares enough to be as involved and invested in your life as you are. Someone to take the weight off your shoulders, even in the smallest ways. You want someone to choose for you, not to control you, but to show that they care enough to notice the food on your plate, the clothes on your body, the music in your ears, the tone of your voice. You want them to see the way your mood shifts with the smallest inconvenience, the way you sit when you’re comfortable versus when you’re not, the moments you almost speak but chooses not to, the difference between what you say and what you mean, the habits you repeat without realizing, the fury you keep hidden… You want someone who helps you decide, not because you’re helpless, but because they see you entirely.<br><br>But how can you trust people when all they do is give you reasons not to?<br><br>So, you built a world of your own, a world with no doors, no windows, and walls so high, one could reach the heavens if they had courage to climb them. You created a space where there is no room for you to need people. You become everything to yourself. In your solitude, people started to whisper behind your back. They say you’ve changed, grown cold and distant, others called you strong, and independent. But for you, it was never about strength, it was about protection.<br><br>You’ve lived within those walls for so long that now, when someone tries to get close, you can feel the walls tremble. It’s her, your inner child, trying to break free, to feel again, to love and to experience the world at her own pace. This unsettles you. So, you end up pushing them away before anything has a chance to matter too much. It’s a defense mechanism; the only way you know how to keep your inner child’s innocence safe.<br><br>But I’m not going anywhere, even if it takes a million years to dismantle what you’ve built, I will spend my whole existence removing more bricks than I did the day before. Not as a promise meant to impress you, but simply as a fact that does not change with time or distance. I will remain consistent in the way I show up. Not loud. Not desperate. Just present.<br><br>When I go quiet, do not mistake it for a lack of love, nor for a lack of caring. Rather, it’s my way of fixing my life, tidying up old habits, and getting my mind in the right place. Because you deserve a version of me that is whole, disciplined, and at peace with itself.<br><br>I LOVE YOU.<br><br><strong>-KHALIL</strong></p>
+        <p id="typing-area"></p>
+        <p style="text-align: right; font-weight: bold;">-KHALIL</p>
       </div>
     </div>
   </div>
 
   <script>
+    const fullText = `I have lost count of the times my pen has bled trying to express what I feel for you, only for it to fail me miserably. Maybe it’s because I keep chasing perfection in my words. I was looking for the right language, when I should have simply been looking at you. How foolish of me not to realize that as long as the subject is you, everything will sound right, everything will feel right… everything will be just right.\n\nYou have always longed to see the world through the eyes of a child. Through that gaze, the world softens, becomes gentler, kinder, simpler, unafraid of wonder. In that innocence, curiosity has no boundaries, imagination no ceiling, and beauty hides in plain sight. You’re sweet, kind, caring, honest, unable to feign your emotions. If someone wounds you, it’s written all over your face. In a world built with masks and performances, you remain real.\n\nYou want to trust again. You want to rest in another’s care, to stop being strong by default. You long for someone who cares enough to be as involved and invested in your life as you are. Someone to take the weight off your shoulders, even in the smallest ways. You want someone to choose for you, not to control you, but to show that they care enough to notice the food on your plate, the clothes on your body, the music in your ears, the tone of your voice. You want them to see the way your mood shifts with the smallest inconvenience, the way you sit when you’re comfortable versus when you’re not, the moments you almost speak but chooses not to, the difference between what you say and what you mean, the habits you repeat without realizing, the fury you keep hidden… You want someone who helps you decide, not because you’re helpless, but because they see you entirely.\n\nBut how can you trust people when all they do is give you reasons not to?\n\nSo, you built a world of your own, a world with no doors, no windows, and walls so high, one could reach the heavens if they had courage to climb them. You created a space where there is no room for you to need people. You become everything to yourself. In your solitude, people started to whisper behind your back. They say you’ve changed, grown cold and distant, others called you strong, and independent. But for you, it was never about strength, it was about protection.\n\nYou’ve lived within those walls for so long that now, when someone tries to get close, you can feel the walls tremble. It’s her, your inner child, trying to break free, to feel again, to love and to experience the world at her own pace. This unsettles you. So, you end up pushing them away before anything has a chance to matter too much. It’s a defense mechanism; the only way you know how to keep your inner child’s innocence safe.\n\nBut I’m not going anywhere, even if it takes a million years to dismantle what you’ve built, I will spend my whole existence removing more bricks than I did the day before. Not as a promise meant to impress you, but simply as a fact that does not change with time or distance. I will remain consistent in the way I show up. Not loud. Not desperate. Just present.\n\nWhen I go quiet, do not mistake it for a lack of love, nor for a lack of caring. Rather, it’s my way of fixing my life, tidying up old habits, and getting my mind in the right place. Because you deserve a version of me that is whole, disciplined, and at peace with itself.\n\nI LOVE YOU.`;
+
     function change(id, delta) {
       let el = document.getElementById(id);
       let v = parseInt(el.innerText) + delta;
@@ -70,10 +78,19 @@
       if(code === "221024") {
         document.getElementById('lock-screen-wrapper').style.display = 'none';
         document.getElementById('letter-wrapper').style.display = 'flex';
-        let audio = document.getElementById('bg-music');
-        audio.play().catch(e => console.log("Autoplay prevented"));
+        document.getElementById('bg-music').play();
+        typeEffect();
       } else {
         alert("Wrong code");
+      }
+    }
+
+    let charIndex = 0;
+    function typeEffect() {
+      if (charIndex < fullText.length) {
+        document.getElementById('typing-area').innerText += fullText.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeEffect, 5); // Fast typing speed
       }
     }
   </script>
