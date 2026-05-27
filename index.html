@@ -25,6 +25,9 @@
   .portrait { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
   .arabic-header { font-family: "Times New Roman", Georgia, serif; font-size: 38px; text-align: right; margin-top: 20px; margin-bottom: 25px; color: #111111; direction: rtl; }
   .letter-text { font-size: 20px; line-height: 1.85; text-align: left; white-space: pre-line; font-family: 'Cormorant Garamond', Georgia, serif; color: #2c2a27; }
+  
+  /* Added style for the final line */
+  .final-line { text-align: center; font-size: 20px; font-style: italic; margin-top: 30px; color: #555; }
 </style>
 </head>
 <body>
@@ -45,6 +48,12 @@
       </div>
       <div class="arabic-header">بيتي</div>
       <div class="letter-text" id="typing-area"></div>
+      
+      <div class="img-container" style="margin-top: 35px;">
+        <img class="portrait" src="IMG_20241022_231045_735.JPG" alt="Second Portrait">
+      </div>
+      
+      <div class="final-line">it will always be yours</div>
     </div>
   </div>
 
@@ -75,7 +84,6 @@ I LOVE YOU.
         document.body.style.backgroundColor = '#fdfcf7';
         document.getElementById('secret-content').style.display = 'block';
         
-        // Play music and start typing
         document.getElementById('bg-music').play();
         typeText();
       } else {
